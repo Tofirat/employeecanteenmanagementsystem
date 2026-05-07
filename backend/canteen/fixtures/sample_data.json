@@ -1,0 +1,132 @@
+[
+  {
+    "model": "canteen.category",
+    "pk": 1,
+    "fields": {
+      "name": "Main Course",
+      "description": "Daily lunch and dinner options",
+      "created_at": "2026-04-12T08:00:00Z",
+      "updated_at": "2026-04-12T08:00:00Z"
+    }
+  },
+  {
+    "model": "canteen.category",
+    "pk": 2,
+    "fields": {
+      "name": "Beverages",
+      "description": "Tea, coffee, juices and drinks",
+      "created_at": "2026-04-12T08:00:00Z",
+      "updated_at": "2026-04-12T08:00:00Z"
+    }
+  },
+  {
+    "model": "canteen.employee",
+    "pk": 1,
+    "fields": {
+      "full_name": "Ayesha Rahman",
+      "employee_code": "EMP-1001",
+      "department": "Human Resources",
+      "email": "ayesha.rahman@example.com",
+      "phone": "+8801700000001",
+      "wallet_balance": "2500.00",
+      "created_at": "2026-04-12T08:00:00Z",
+      "updated_at": "2026-04-12T08:00:00Z"
+    }
+  },
+  {
+    "model": "canteen.employee",
+    "pk": 2,
+    "fields": {
+      "full_name": "Nafis Ahmed",
+      "employee_code": "EMP-1002",
+      "department": "Engineering",
+      "email": "nafis.ahmed@example.com",
+      "phone": "+8801700000002",
+      "wallet_balance": "1800.00",
+      "created_at": "2026-04-12T08:00:00Z",
+      "updated_at": "2026-04-12T08:00:00Z"
+    }
+  },
+  {
+    "model": "canteen.menuitem",
+    "pk": 1,
+    "fields": {
+      "category": 1,
+      "name": "Chicken Biryani",
+      "description": "Fragrant basmati rice with chicken and salad",
+      "price": "5.50",
+      "is_vegetarian": false,
+      "is_available": true,
+      "calories": 640,
+      "created_at": "2026-04-12T08:00:00Z",
+      "updated_at": "2026-04-12T08:00:00Z"
+    }
+  },
+  {
+    "model": "canteen.menuitem",
+    "pk": 2,
+    "fields": {
+      "category": 1,
+      "name": "Vegetable Khichuri",
+      "description": "Comfort bowl with lentils, vegetables, and egg",
+      "price": "4.20",
+      "is_vegetarian": true,
+      "is_available": true,
+      "calories": 480,
+      "created_at": "2026-04-12T08:00:00Z",
+      "updated_at": "2026-04-12T08:00:00Z"
+    }
+  },
+  {
+    "model": "canteen.menuitem",
+    "pk": 3,
+    "fields": {
+      "category": 2,
+      "name": "Cold Coffee",
+      "description": "Chilled coffee with milk foam",
+      "price": "2.10",
+      "is_vegetarian": true,
+      "is_available": true,
+      "calories": 150,
+      "created_at": "2026-04-12T08:00:00Z",
+      "updated_at": "2026-04-12T08:00:00Z"
+    }
+  },
+  {
+    "model": "canteen.mealschedule",
+    "pk": 1,
+    "fields": {
+      "title": "Weekday Lunch Service",
+      "shift": "lunch",
+      "service_date": "2026-04-12",
+      "start_time": "12:30:00",
+      "end_time": "14:30:00",
+      "is_active": true,
+      "created_at": "2026-04-12T08:00:00Z",
+      "updated_at": "2026-04-12T08:00:00Z"
+    }
+  },
+  {
+    "model": "canteen.feedback",
+    "pk": 1,
+    "fields": {
+      "employee": 1,
+      "rating": 5,
+      "comment": "Great taste and timely delivery during lunch break.",
+      "created_at": "2026-04-12T08:00:00Z",
+      "updated_at": "2026-04-12T08:00:00Z"
+    }
+  },
+  {
+    "model": "canteen.announcement",
+    "pk": 1,
+    "fields": {
+      "title": "Lunch Counter Timing Updated",
+      "message": "Lunch service will start 15 minutes earlier this week because of the company event schedule.",
+      "is_active": true,
+      "published_at": "2026-04-12T08:30:00Z",
+      "created_at": "2026-04-12T08:30:00Z",
+      "updated_at": "2026-04-12T08:30:00Z"
+    }
+  }
+]

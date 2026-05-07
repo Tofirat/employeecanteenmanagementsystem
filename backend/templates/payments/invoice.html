@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invoice {{ payment.invoice_number }}</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            color: #1e293b;
+            line-height: 1.5;
+            margin: 0;
+            padding: 40px;
+            background-color: #f8fafc;
+        }
+
+        .invoice-card {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 24px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            border-bottom: 2px solid #f1f5f9;
+            padding-bottom: 30px;
+            margin-bottom: 30px;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-box {
+            background-color: #4f46e5;
+            color: white;
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            font-weight: bold;
+            font-size: 24px;
+        }
+
+        .brand-name {
+            font-size: 24px;
+            font-weight: 700;
+            color: #0f172a;
+        }
+
+        .invoice-meta {
+            text-align: right;
+        }
+
+        .invoice-meta h1 {
+            font-size: 30px;
+            margin: 0;
+            color: #4f46e5;
+        }
+
+        .invoice-meta p {
+            margin: 4px 0;
+            color: #64748b;
+            font-size: 14px;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .info-section h3 {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: #94a3b8;
+            margin-bottom: 12px;
+        }
+
+        .info-section p {
+            margin: 4px 0;
+            font-size: 15px;
+            font-weight: 600;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 9999px;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .status-paid { background-color: #f0fdf4; color: #15803d; }
+        .status-unpaid { background-color: #fffbeb; color: #b45309; }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 40px;
+        }
+
+        th {
+            text-align: left;
+            padding: 12px;
+            border-bottom: 2px solid #f1f5f9;
+            color: #64748b;
+            font-size: 13px;
+        }
+
+        td {
+            padding: 16px 12px;
+            border-bottom: 1px solid #f1f5f9;
+            font-size: 15px;
+        }
+
+        .total-section {
+            display: flex;
+            justify-content: flex-end;
+            border-top: 2px solid #f1f5f9;
+            padding-top: 20px;
+        }
+
+        .total-box {
+            width: 250px;
+        }
+
+        .total-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+
+        .total-row.grand-total {
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px solid #f1f5f9;
+            font-size: 20px;
+            font-weight: 700;
+            color: #0f172a;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            color: #94a3b8;
+            font-size: 13px;
+        }
+
+        @media print {
+            body { background: white; padding: 0; }
+            .invoice-card { box-shadow: none; border: none; max-width: 100%; }
+            .no-print { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <div class="invoice-card">
+        <div class="header">
+            <div class="brand">
+                <div class="logo-box">C</div>
+                <div>
+                    <div class="brand-name">Canteen Pro</div>
+                    <p style="margin:0; font-size:12px; color:#64748b;">Premium Management System</p>
+                </div>
+            </div>
+            <div class="invoice-meta">
+                <h1>INVOICE</h1>
+                <p>#{{ payment.invoice_number }}</p>
+                <p>Date: {{ payment.date|date:"F d, Y" }}</p>
+            </div>
+        </div>
+
+        <div class="info-grid">
+            <div class="info-section">
+                <h3>Billed To</h3>
+                <p>{{ payment.employee.name }}</p>
+                <p>{{ payment.employee.employee_id }}</p>
+                <p>{{ payment.employee.department.department_name|default:"No department assigned" }}</p>
+                <p>{{ payment.employee.email }}</p>
+            </div>
+            <div class="info-section invoice-meta">
+                <h3>Payment Status</h3>
+                <div class="status-badge status-{{ payment.status }}">
+                    {{ payment.get_status_display }}
+                </div>
+                <p style="margin-top: 10px;">Method: {{ payment.get_payment_method_display }}</p>
+                {% if payment.paid_at %}
+                <p>Paid on: {{ payment.paid_at|date:"F d, Y H:i" }}</p>
+                {% endif %}
+            </div>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Item Description</th>
+                    <th style="text-align: center;">Qty</th>
+                    <th style="text-align: right;">Unit Price</th>
+                    <th style="text-align: right;">Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if payment.order %}
+                    {% for item in payment.order.items.all %}
+                    <tr>
+                        <td>
+                            <div style="font-weight: 600;">{{ item.menu_item.food_name }}</div>
+                            <div style="font-size: 12px; color: #64748b;">{{ item.menu_item.get_meal_type_display }}</div>
+                        </td>
+                        <td style="text-align: center;">{{ item.quantity }}</td>
+                        <td style="text-align: right;">৳{{ item.item_price }}</td>
+                        <td style="text-align: right;">৳{{ item.total_price }}</td>
+                    </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td>Wallet / Billing Payment - {{ payment.billing_month|date:"F Y" }}</td>
+                        <td style="text-align: center;">1</td>
+                        <td style="text-align: right;">৳{{ payment.amount }}</td>
+                        <td style="text-align: right;">৳{{ payment.amount }}</td>
+                    </tr>
+                {% endif %}
+            </tbody>
+        </table>
+
+        <div class="total-section">
+            <div class="total-box">
+                <div class="total-row">
+                    <span style="color: #64748b;">Subtotal</span>
+                    <span>৳{{ payment.amount }}</span>
+                </div>
+                <div class="total-row">
+                    <span style="color: #64748b;">Tax (0%)</span>
+                    <span>৳0.00</span>
+                </div>
+                <div class="total-row grand-total">
+                    <span>Total Amount</span>
+                    <span>৳{{ payment.amount }}</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>Thank you for your business! This is a computer-generated invoice.</p>
+            <p>&copy; 2026 Canteen Pro Management Services</p>
+        </div>
+        
+        <div class="no-print" style="margin-top: 30px; text-align: center;">
+            <button onclick="window.print()" style="background: #4f46e5; color: white; border: none; padding: 12px 24px; border-radius: 12px; font-weight: 600; cursor: pointer; transition: 0.2s;">
+                Print Invoice
+            </button>
+        </div>
+    </div>
+</body>
+</html>

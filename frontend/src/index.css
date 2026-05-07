@@ -1,0 +1,72 @@
+﻿@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Poppins:wght@500;600;700;800&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+}
+
+html {
+  @apply bg-[#f6f8fc];
+}
+
+body {
+  @apply m-0 min-h-screen bg-[#f6f8fc] font-body text-slate-900 antialiased;
+}
+
+#root {
+  @apply min-h-screen;
+}
+
+.soft-grid {
+  background-image:
+    linear-gradient(rgba(148, 163, 184, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(148, 163, 184, 0.08) 1px, transparent 1px);
+  background-size: 36px 36px;
+}
+
+.glass-panel {
+  @apply border border-slate-200 bg-white;
+}
+
+@layer base {
+  body {
+    @apply bg-slate-950 text-slate-200 antialiased;
+  }
+}
+
+@layer components {
+  /* Custom scrollbar for the sidebar */
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 4px;
+  }
+  .custom-scrollbar::-webkit-scrollbar-track {
+    @apply bg-transparent;
+  }
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    @apply bg-slate-700 rounded-full;
+  }
+
+  /* Navigation Link Styles */
+  .nav-link {
+    @apply flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all duration-200;
+  }
+  .nav-link-active {
+    @apply bg-indigo-500/10 text-indigo-400 font-medium;
+  }
+  .nav-link-inactive {
+    @apply text-slate-400 hover:bg-slate-800/50 hover:text-slate-200;
+  }
+}
+
+/* Animations for the dropdown */
+.animate-dropdown {
+  animation: slideIn 0.2s ease-out forwards;
+}
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
